@@ -1,5 +1,6 @@
 package com.infotrapichao.controle_de_gastos.src.distributed.interfaces.mappers;
 
+
 import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.dtos.common.GastoDTO;
 import com.infotrapichao.controle_de_gastos.src.domain.models.common.Gasto;
 

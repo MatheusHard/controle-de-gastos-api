@@ -1,0 +1,34 @@
+package com.infotrapichao.controle_de_gastos.src.distributed.interfaces.mappers;
+
+import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.dtos.common.AgendaDePagamentoDTO;
+import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.dtos.common.GastoDTO;
+import com.infotrapichao.controle_de_gastos.src.domain.models.common.AgendaDePagamento;
+import com.infotrapichao.controle_de_gastos.src.domain.models.common.Gasto;
+
+import java.util.List;
+
+public class AgendaDePagamentoMapper {
+
+    public static AgendaDePagamentoDTO toAgendaDePagamentoDTO(AgendaDePagamento agendaDePagamento) {
+        return new AgendaDePagamentoDTO(agendaDePagamento.getId(), agendaDePagamento.getCreatedAt(), agendaDePagamento.getUpdatedAt(),
+                agendaDePagamento.getUser(), agendaDePagamento.getDeletado(), null, null);
+    }
+
+    public static AgendaDePagamento toAgendaDePagamento(AgendaDePagamentoDTO agendaDePagamentoDTO) {
+        return new AgendaDePagamento(agendaDePagamentoDTO.getId(), agendaDePagamentoDTO.getCreatedAt(), agendaDePagamentoDTO.getUpdatedAt(),
+                agendaDePagamentoDTO.getUser(), agendaDePagamentoDTO.getDeletado());
+    }
+
+    public static List<AgendaDePagamentoDTO> toAgendamentoDTOList(List<AgendaDePagamento> agendasDePagamento) {
+        return agendasDePagamento.stream().map(a -> {
+            AgendaDePagamentoDTO dto =  AgendaDePagamentoMapper.toAgendaDePagamentoDTO(a);
+            //Aqui pode mudar campo do objeto, caso queira
+            dto.getUser().setPassword(null);
+            return dto;
+        }).toList();
+    }
+
+    public static List<AgendaDePagamento> toAgendaDePagamentoList(List<AgendaDePagamentoDTO> agendasDePagamentoDtos) {
+        return agendasDePagamentoDtos.stream().map(AgendaDePagamentoMapper::toAgendaDePagamento).toList();
+    }
+}

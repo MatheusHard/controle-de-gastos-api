@@ -1,0 +1,47 @@
+package com.infotrapichao.controle_de_gastos.src.domain.models.common;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.infotrapichao.controle_de_gastos.src.domain.models.security.User;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+public class AgendaDePagamento {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @CreatedDate
+    @Column(name = "created_at", nullable = false, updatable = false, columnDefinition = "DATETIME(6) DEFAULT CURRENT_TIMESTAMP(6)")
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at", columnDefinition = "DATETIME(6) DEFAULT CURRENT_TIMESTAMP(6)")
+    private LocalDateTime updatedAt;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonBackReference(value = "user-agendadepagamentos")
+    private User user;
+
+    /*@OneToMany(mappedBy = "gasto", cascade = CascadeType.ALL)
+    @JsonManagedReference(value = "agendadepagamento-gastos")
+    private List<Gasto> gastos;*/
+
+    @Column(columnDefinition = "bit(1) default 0")
+    private Boolean deletado;
+
+
+}

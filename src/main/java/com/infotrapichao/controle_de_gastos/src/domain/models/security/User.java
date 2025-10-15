@@ -1,5 +1,7 @@
 package com.infotrapichao.controle_de_gastos.src.domain.models.security;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.infotrapichao.controle_de_gastos.src.domain.models.common.AgendaDePagamento;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -38,8 +40,12 @@ public class User {
     @Column(length = 50, nullable = false)
     private String email;
 
-    @Column(length = 255, nullable = false)
+    @Column(nullable = false)
     private String password;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference(value = "user-agendadepagamentos")
+    private List<AgendaDePagamento> agendaDePagamentos;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "tab_user_roles", joinColumns = @JoinColumn(name = "user"))

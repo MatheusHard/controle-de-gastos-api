@@ -11,7 +11,7 @@ public class UserMapper {
     }
 
     public static User toUser(UserDTO userDTO) {
-        return new User(userDTO.getId(), userDTO.getCreatedAt(), userDTO.getUpdatedAt(), userDTO.getUsername(), userDTO.getEmail(), userDTO.getPassword(), userDTO.getRoles());
+        return new User(userDTO.getId(), userDTO.getCreatedAt(), userDTO.getUpdatedAt(), userDTO.getUsername(), userDTO.getEmail(), userDTO.getPassword(), null, userDTO.getRoles());
     }
 
     public static List<UserDTO> toUserDTOList(List<User> users) {

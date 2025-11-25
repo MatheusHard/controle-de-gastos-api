@@ -53,4 +53,9 @@ public class Gasto {
     @Column(precision = 19, scale = 2)  // 19 dígitos no total, 2 após a vírgula
     private BigDecimal valor;
 
+    @ManyToOne
+    @JoinColumn(name = "agendadepagamento_id")
+    @JsonBackReference(value = "agendadepagamento-gastos")
+    private AgendaDePagamento agendaDePagamento;
+
 }

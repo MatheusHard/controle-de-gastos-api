@@ -36,12 +36,11 @@ public class AgendaDePagamento {
     @JsonBackReference(value = "user-agendadepagamentos")
     private User user;
 
-    /*@OneToMany(mappedBy = "gasto", cascade = CascadeType.ALL)
-    @JsonManagedReference(value = "agendadepagamento-gastos")
-    private List<Gasto> gastos;*/
-
     @Column(columnDefinition = "bit(1) default 0")
     private Boolean deletado;
 
+    @OneToMany(mappedBy = "agendaDePagamento", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference(value = "agendadepagamento-gastos")
+    private List<Gasto> gastos;
 
 }

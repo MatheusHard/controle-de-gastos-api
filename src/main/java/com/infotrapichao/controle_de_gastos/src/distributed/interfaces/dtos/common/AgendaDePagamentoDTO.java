@@ -2,6 +2,7 @@ package com.infotrapichao.controle_de_gastos.src.distributed.interfaces.dtos.com
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.infotrapichao.controle_de_gastos.src.domain.models.common.Gasto;
 import com.infotrapichao.controle_de_gastos.src.domain.models.security.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Setter
 @Getter
@@ -25,6 +27,7 @@ public class AgendaDePagamentoDTO {
 
     private User user;
     private Boolean deletado;
+    private List<Gasto> gastos;
 
     ///Filters
     private LocalDate dataInicial;

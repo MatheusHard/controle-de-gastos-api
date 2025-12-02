@@ -1,5 +1,6 @@
 package com.infotrapichao.controle_de_gastos.src.distributed.interfaces.dtos.common;
 
+import com.infotrapichao.controle_de_gastos.src.domain.models.common.AgendaDePagamento;
 import com.infotrapichao.controle_de_gastos.src.domain.models.security.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,5 +27,6 @@ public class GastoDTO {
     private LocalDate dataInicial;
     private LocalDate dataFinal;
     private BigDecimal valor;
+    private AgendaDePagamento AgendaDePagamento;
 
 }

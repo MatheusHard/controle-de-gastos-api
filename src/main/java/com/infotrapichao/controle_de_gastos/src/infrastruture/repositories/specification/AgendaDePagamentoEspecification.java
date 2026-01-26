@@ -22,6 +22,10 @@ public class AgendaDePagamentoEspecification {
             if (filtro.getId() != null && filtro.getId() != 0) {
                 predicates.add(cb.equal(root.get("id"), filtro.getId()));
             }
+            ///por User Id:
+            if (filtro.getUser().getId() != null && filtro.getUser().getId() != 0) {
+                predicates.add(cb.equal(root.get("user").get("id"), filtro.getUser().getId()));
+            }
             ///Data
             if (filtro.getCreatedAt() != null) {
                 predicates.add(cb.equal(root.get("createdAt"), filtro.getCreatedAt()));

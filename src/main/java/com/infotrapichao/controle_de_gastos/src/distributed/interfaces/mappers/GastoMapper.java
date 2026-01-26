@@ -10,18 +10,18 @@ public class GastoMapper {
 
 public static GastoDTO toGastoDTO(Gasto gasto) {
     return new GastoDTO(gasto.getId(), gasto.getCreatedAt(), gasto.getUpdatedAt(),
-            gasto.getVencimento(), gasto.getDescricao(), gasto.getUser(),  gasto.isDeletado(), null, null, gasto.getValor(), gasto.getAgendaDePagamento());
+            gasto.getVencimento(), gasto.getDescricao(), gasto.getUser(),  gasto.isDeletado(), null, null, gasto.getValor(), gasto.getAgendaDePagamento(), gasto.isPago());
 }
 
 public static Gasto toGasto(GastoDTO gastoDTO) {
     return new Gasto(gastoDTO.getId(), gastoDTO.getCreatedAt(), gastoDTO.getUpdatedAt(),
-            gastoDTO.getVencimento(), gastoDTO.getDescricao(), gastoDTO.getDeletado(), gastoDTO.getUser(), gastoDTO.getValor(), gastoDTO.getAgendaDePagamento());
+            gastoDTO.getVencimento(), gastoDTO.getDescricao(), gastoDTO.getDeletado(), gastoDTO.getUser(), gastoDTO.getValor(), gastoDTO.getAgendaDePagamento(), gastoDTO.isPago());
 }
 
 public static List<GastoDTO> toAgendamentoDTOList(List<Gasto> gastos) {
     return gastos.stream().map(a -> {
         GastoDTO dto =  GastoMapper.toGastoDTO(a);
-        //Aqui pode mudar campo do objeto, caso queira
+         ///Aqui pode mudar campo do objeto, caso queira
          dto.getUser().setPassword(null);
         return dto;
     }).toList();

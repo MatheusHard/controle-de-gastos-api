@@ -58,4 +58,8 @@ public class Gasto {
     @JsonBackReference(value = "agendadepagamento-gastos")
     private AgendaDePagamento agendaDePagamento;
 
+    @Column(columnDefinition = "bit(1) default 0")
+    private boolean pago = false;
+
+
 }

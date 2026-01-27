@@ -22,7 +22,7 @@ public class GastoSpecification {
                 predicates.add(cb.equal(root.get("id"), filtro.getId()));
             }
             ///por User Id:
-            if (filtro.getUser().getId() != null && filtro.getUser().getId() != 0) {
+            if (filtro.getUser() != null && filtro.getUser().getId() != null && filtro.getUser().getId() != 0) {
                 predicates.add(cb.equal(root.get("user").get("id"), filtro.getUser().getId()));
             }
             ///Data
@@ -34,7 +34,7 @@ public class GastoSpecification {
             if (filtro.getDeletado() != null) {
                 predicates.add(cb.equal(root.get("deletado"), filtro.getDeletado()));
             }
-            // 🔹 Filtro por intervalo de datas (between)
+            ///Data Inicial e Data Final (between)
             if (filtro.getDataInicial() != null && filtro.getDataFinal() != null) {
                 LocalDateTime inicio = filtro.getDataInicial().atStartOfDay();
                 LocalDateTime fim = filtro.getDataFinal().atTime(LocalTime.MAX); // 23:59:59.999...
@@ -44,6 +44,14 @@ public class GastoSpecification {
             } else if (filtro.getDataFinal() != null) {
                 predicates.add(cb.lessThanOrEqualTo(root.get("updatedAt"), filtro.getDataFinal().atTime(LocalTime.MAX)));
             }
+
+            ///Data Vencimento
+            if (filtro.getVencimento() != null) {
+                LocalDateTime inicioDia = filtro.getVencimento().toLocalDate().atStartOfDay();
+                LocalDateTime fimDia = filtro.getVencimento().toLocalDate().atTime(LocalTime.MAX);
+                predicates.add(cb.between(root.get("vencimento"), inicioDia, fimDia));
+            }
+
 
             // 🔽 Ordenação por updatedAt DESC
             assert query != null;

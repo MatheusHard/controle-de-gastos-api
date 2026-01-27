@@ -13,11 +13,6 @@ public class EmailService {
     @Autowired
     private JavaMailSender mailSender;
 
-    /*
-    instanciar , onde for usar, blz:
-    @Autowired
-    private EmailService emailService;*/
-
     public void sendSimpleEmail(EmailDTO emailDTO) {
 
         try {

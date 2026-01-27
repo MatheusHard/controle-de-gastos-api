@@ -1,6 +1,7 @@
 package com.infotrapichao.controle_de_gastos.src.domain.models.common;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.enums.StatusPagamentoEnum;
 import com.infotrapichao.controle_de_gastos.src.domain.models.security.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -58,8 +59,8 @@ public class Gasto {
     @JsonBackReference(value = "agendadepagamento-gastos")
     private AgendaDePagamento agendaDePagamento;
 
-    @Column(columnDefinition = "bit(1) default 0")
-    private boolean pago = false;
+    @Column()
+    private StatusPagamentoEnum statusPagamento;
 
 
 }

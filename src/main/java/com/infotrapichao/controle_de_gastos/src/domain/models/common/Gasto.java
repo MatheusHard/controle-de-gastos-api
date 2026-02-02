@@ -62,5 +62,7 @@ public class Gasto {
     @Column()
     private StatusPagamentoEnum statusPagamento;
 
+    @Column(columnDefinition = "bit(1) default 0")
+    private boolean pago = false;
 
 }

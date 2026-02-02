@@ -10,12 +10,12 @@ public class GastoMapper {
 
 public static GastoDTO toGastoDTO(Gasto gasto) {
     return new GastoDTO(gasto.getId(), gasto.getCreatedAt(), gasto.getUpdatedAt(),
-            gasto.getVencimento(), gasto.getDescricao(), gasto.getUser(),  gasto.isDeletado(), null, null, gasto.getValor(), gasto.getAgendaDePagamento(), gasto.getStatusPagamento());
+            gasto.getVencimento(), gasto.getDescricao(), gasto.getUser(),  gasto.isDeletado(), null, null, gasto.getValor(), gasto.getAgendaDePagamento(), gasto.getStatusPagamento(), gasto.isPago());
 }
 
 public static Gasto toGasto(GastoDTO gastoDTO) {
     return new Gasto(gastoDTO.getId(), gastoDTO.getCreatedAt(), gastoDTO.getUpdatedAt(),
-            gastoDTO.getVencimento(), gastoDTO.getDescricao(), gastoDTO.getDeletado(), gastoDTO.getUser(), gastoDTO.getValor(), gastoDTO.getAgendaDePagamento(), gastoDTO.getStatusPagamento());
+            gastoDTO.getVencimento(), gastoDTO.getDescricao(), gastoDTO.getDeletado(), gastoDTO.getUser(), gastoDTO.getValor(), gastoDTO.getAgendaDePagamento(), gastoDTO.getStatusPagamento(), gastoDTO.getPago());
 }
 
 public static List<GastoDTO> toAgendamentoDTOList(List<Gasto> gastos) {

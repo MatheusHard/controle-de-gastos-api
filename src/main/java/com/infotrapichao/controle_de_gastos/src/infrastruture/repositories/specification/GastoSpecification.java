@@ -51,7 +51,10 @@ public class GastoSpecification {
                 LocalDateTime fimDia = filtro.getVencimento().toLocalDate().atTime(LocalTime.MAX);
                 predicates.add(cb.between(root.get("vencimento"), inicioDia, fimDia));
             }
-
+            ///Pago
+            if (filtro.getPago() != null) {
+                predicates.add(cb.equal(root.get("pago"), filtro.getPago()));
+            }
 
             // 🔽 Ordenação por updatedAt DESC
             assert query != null;

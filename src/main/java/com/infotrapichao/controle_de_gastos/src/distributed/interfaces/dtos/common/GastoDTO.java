@@ -31,5 +31,6 @@ public class GastoDTO {
     private BigDecimal valor;
     private AgendaDePagamento AgendaDePagamento;
     private StatusPagamentoEnum statusPagamento;
+    private Boolean pago = false;
 
 }

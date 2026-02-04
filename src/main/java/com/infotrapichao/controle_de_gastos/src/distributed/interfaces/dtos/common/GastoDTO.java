@@ -32,5 +32,6 @@ public class GastoDTO {
     private AgendaDePagamento AgendaDePagamento;
     private StatusPagamentoEnum statusPagamento;
     private Boolean pago = false;
-
+    private String photoName;
+    private String imagemBase64;
 }

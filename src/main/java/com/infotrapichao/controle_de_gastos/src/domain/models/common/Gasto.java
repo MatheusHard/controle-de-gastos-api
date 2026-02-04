@@ -65,4 +65,8 @@ public class Gasto {
     @Column(columnDefinition = "bit(1) default 0")
     private boolean pago = false;
 
+    private String photoName;
+
+    private String imagemBase64;
+
 }

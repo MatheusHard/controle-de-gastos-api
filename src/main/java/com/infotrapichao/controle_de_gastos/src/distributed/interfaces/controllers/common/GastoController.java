@@ -1,6 +1,7 @@
 package com.infotrapichao.controle_de_gastos.src.distributed.interfaces.controllers.common;
 
 import com.infotrapichao.controle_de_gastos.src.application.contracts.common.IGastoApplication;
+import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.core.utils.Utils;
 import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.dtos.common.GastoDTO;
 import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.mappers.GastoMapper;
 import com.infotrapichao.controle_de_gastos.src.domain.models.common.Gasto;
@@ -27,6 +28,8 @@ public class GastoController {
     public ResponseEntity<Gasto> create(@Validated @RequestBody GastoDTO gastoDTO){
 
         Gasto gasto = GastoMapper.toGasto(gastoDTO);
+        Utils.savePhoto(gasto.getPhotoName(), gasto.getImagemBase64());
+
         var agendamentoCreated = _gastoApplication.create(gasto);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -40,6 +43,8 @@ public class GastoController {
     public ResponseEntity<Gasto> put(@RequestBody GastoDTO gastoDTO){
 
         Gasto gasto = GastoMapper.toGasto(gastoDTO);
+        Utils.savePhoto(gasto.getPhotoName(), gasto.getImagemBase64());
+
         var gastoUpdated = _gastoApplication.update(gasto);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()

@@ -29,7 +29,7 @@ public class GastoController {
 
         Gasto gasto = GastoMapper.toGasto(gastoDTO);
         Utils.savePhoto(gasto.getPhotoName(), gasto.getImagemBase64());
-
+        gasto.setImagemBase64(null);
         var agendamentoCreated = _gastoApplication.create(gasto);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -43,8 +43,10 @@ public class GastoController {
     public ResponseEntity<Gasto> put(@RequestBody GastoDTO gastoDTO){
 
         Gasto gasto = GastoMapper.toGasto(gastoDTO);
-        Utils.savePhoto(gasto.getPhotoName(), gasto.getImagemBase64());
-
+        if(gasto.getPhotoName() != null && gasto.getImagemBase64() != null) {
+            Utils.savePhoto(gasto.getPhotoName(), gasto.getImagemBase64());
+        }
+        gasto.setImagemBase64(null);
         var gastoUpdated = _gastoApplication.update(gasto);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()

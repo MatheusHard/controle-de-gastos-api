@@ -16,12 +16,11 @@ public class GastoSpecification {
         return (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
 
-
             ///Por Id
             if (filtro.getId() != null && filtro.getId() != 0) {
                 predicates.add(cb.equal(root.get("id"), filtro.getId()));
             }
-            ///por User Id:
+            ///Por User Id:
             if (filtro.getUser() != null && filtro.getUser().getId() != null && filtro.getUser().getId() != 0) {
                 predicates.add(cb.equal(root.get("user").get("id"), filtro.getUser().getId()));
             }
@@ -29,7 +28,6 @@ public class GastoSpecification {
             if (filtro.getCreatedAt() != null) {
                 predicates.add(cb.equal(root.get("createdAt"), filtro.getCreatedAt()));
             }
-
             ///Deletado
             if (filtro.getDeletado() != null) {
                 predicates.add(cb.equal(root.get("deletado"), filtro.getDeletado()));
@@ -44,7 +42,6 @@ public class GastoSpecification {
             } else if (filtro.getDataFinal() != null) {
                 predicates.add(cb.lessThanOrEqualTo(root.get("updatedAt"), filtro.getDataFinal().atTime(LocalTime.MAX)));
             }
-
             ///Data Vencimento
             if (filtro.getVencimento() != null) {
                 LocalDateTime inicioDia = filtro.getVencimento().toLocalDate().atStartOfDay();
@@ -55,10 +52,12 @@ public class GastoSpecification {
             if (filtro.getPago() != null) {
                 predicates.add(cb.equal(root.get("pago"), filtro.getPago()));
             }
-
-            // 🔽 Ordenação por updatedAt DESC
+            ///Por AgendaDePagamento Id:
+            if (filtro.getAgendaDePagamento() != null && filtro.getAgendaDePagamento().getId() != null && filtro.getAgendaDePagamento().getId() != 0) {
+                predicates.add(cb.equal(root.get("agendaDePagamento").get("id"), filtro.getAgendaDePagamento().getId()));
+            }
+            /// Ordenação por updatedAt DESC
             assert query != null;
-
             query.orderBy(cb.asc(root.get("updatedAt")));
 
             return cb.and(predicates.toArray(new Predicate[0]));

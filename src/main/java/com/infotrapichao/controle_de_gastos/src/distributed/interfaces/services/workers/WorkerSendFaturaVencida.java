@@ -23,7 +23,7 @@ public class WorkerSendFaturaVencida {
         _gastoApplication = gastoApplication;
     }
 
-    @Scheduled(cron = "0 35 16 * * *", zone = "America/Sao_Paulo") // 1º segundos; 2º minutos; 3º horas [Campo]
+    @Scheduled(cron = "0 54 10 * * *", zone = "America/Sao_Paulo") // 1º segundos; 2º minutos; 3º horas [Campo]
     public void executarTarefaDiaria() {
         System.out.println("Executando tarefa diária às 16:35...");
         this.execSendEmails();
@@ -34,6 +34,7 @@ public class WorkerSendFaturaVencida {
         GastoDTO filter = new GastoDTO();
         filter.setVencimento(LocalDateTime.now()); //Pegar apenas faturas que vencem hoje
         filter.setDeletado(false);
+        filter.setPago(false);
         var list = _gastoApplication.findAllByFilter(filter);
         for (Gasto fatura : list) {
             sendEmail(fatura);
@@ -41,7 +42,7 @@ public class WorkerSendFaturaVencida {
     }
 
     private void sendEmail(Gasto fatura){
-        emailService.sendSimpleEmail(this.generateEmailDTO(fatura));
+        emailService.sendHtmlEmail(this.generateEmailDTO(fatura));
     }
     private EmailDTO generateEmailDTO(Gasto fatura){
         EmailDTO email = new EmailDTO();

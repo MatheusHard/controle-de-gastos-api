@@ -63,7 +63,7 @@ public class AgendaDePagamentoController {
         var agendasDePagamento = _agendaDePagamentoApplication.findAllByFilter(filter);
         AgendaDePagamento agendaDePagamento = null;
         if(!agendasDePagamento.isEmpty()){
-            agendaDePagamento = agendasDePagamento.get(0);
+            agendaDePagamento = agendasDePagamento.getFirst();
         }
         assert agendaDePagamento != null;
         var fatura = AgendaDePagamentoMapper.toAgendaDePagamentoDTO(agendaDePagamento);
@@ -75,6 +75,4 @@ public class AgendaDePagamentoController {
         var lista = AgendaDePagamentoMapper.toAgendamentoDTOList(agendasDePagamento);
         return ResponseEntity.ok(lista);
     }
-
-
 }

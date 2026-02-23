@@ -7,28 +7,33 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
+import org.springframework.mail.javamail.MimeMessageHelper;
+
 @Service
 public class EmailService {
 
     @Autowired
     private JavaMailSender mailSender;
 
-    public void sendSimpleEmail(EmailDTO emailDTO) {
-
+    public void sendHtmlEmail(EmailDTO emailDTO) {
         try {
-            SimpleMailMessage message = new SimpleMailMessage();
-            message.setTo(emailDTO.getDestinatario());
-            message.setSubject(emailDTO.getAssunto());
-            message.setText(getCorpo(emailDTO));
-            message.setFrom(emailDTO.getRemetente()); // mesmo e-mail configurado no SMTP
+            MimeMessage mimeMessage = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 
-            mailSender.send(message);
-        }catch (Exception e){
-            System.out.println(e.getMessage());
+            helper.setTo(emailDTO.getDestinatario());
+            helper.setSubject(emailDTO.getAssunto());
+            helper.setText(getCorpo(emailDTO), true); // true = habilita HTML
+            helper.setFrom(emailDTO.getRemetente());
+
+            mailSender.send(mimeMessage);
+        } catch (MessagingException e) {
+            System.out.println("Erro ao enviar e-mail: " + e.getMessage());
         }
     }
-    private String getCorpo(EmailDTO emailDTO){
 
+    private String getCorpo(EmailDTO emailDTO) {
         String nomeUser = emailDTO.getNomeUsuario();
         String descricao = emailDTO.getDescricao();
         String valor = emailDTO.getValor().toString();
@@ -41,15 +46,16 @@ public class EmailService {
               <meta charset="UTF-8">
             </head>
             <body style="font-family: Arial, sans-serif; font-size: 16px; color: #000;">
-              <p>Olá <strong>Sr.(a) %s</strong>,</p>
               <br>
-              <p>Sua fatura:</p>
-              <p><strong style="font-size: 18px;">%s</strong></p>
-              <p>Valor: R$ %s</p>
-              <p>Vence em: %s</p>
+                  <p>Olá <strong>Sr.(a) %s</strong>,</p>
+                  <p>Segue abaixo os detalhes da sua fatura:</p>
+                  <p>📄 Fatura: <strong style="font-size: 18px;">%s</strong></p>
+                  <p>💰 Valor: R$ %s</p>
+                  <p>📅 Vencimento: %s</p>
+              <br>
+                  <p>Por favor, verifique as informações até a data de vencimento para evitar encargos adicionais.</p>
             </body>
             </html>
             """, nomeUser, descricao, valor, dataVencimento);
-
     }
 }

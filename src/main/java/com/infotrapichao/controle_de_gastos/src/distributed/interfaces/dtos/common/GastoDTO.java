@@ -1,7 +1,9 @@
 package com.infotrapichao.controle_de_gastos.src.distributed.interfaces.dtos.common;
 
+import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.enums.StatusPagamentoEnum;
 import com.infotrapichao.controle_de_gastos.src.domain.models.common.AgendaDePagamento;
 import com.infotrapichao.controle_de_gastos.src.domain.models.security.User;
+import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,5 +30,8 @@ public class GastoDTO {
     private LocalDate dataFinal;
     private BigDecimal valor;
     private AgendaDePagamento AgendaDePagamento;
-
+    private StatusPagamentoEnum statusPagamento;
+    private Boolean pago = false;
+    private String photoName;
+    private String imagemBase64;
 }

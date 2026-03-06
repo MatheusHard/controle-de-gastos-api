@@ -2,26 +2,29 @@ package com.infotrapichao.controle_de_gastos.src.distributed.interfaces.controll
 
 import com.infotrapichao.controle_de_gastos.src.application.contracts.security.IUserApplication;
 import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.core.utils.Utils;
+import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.dtos.common.EmailDTO;
 import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.dtos.security.LoginDTO;
 import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.dtos.security.SessionDTO;
+import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.services.smtp.EmailService;
 import com.infotrapichao.controle_de_gastos.src.domain.models.security.User;
 import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.configuration.jwt.JwtService;
 import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.configuration.jwt.SecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
-import java.util.Base64;
-import java.nio.charset.StandardCharsets;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 
+import java.math.BigDecimal;
+import java.time.DateTimeException;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 @RestController
 public class AuthController {
-
 
     @Autowired
     private PasswordEncoder encoder;
@@ -71,4 +74,4 @@ public class AuthController {
         }
     }
 
-    }
+}

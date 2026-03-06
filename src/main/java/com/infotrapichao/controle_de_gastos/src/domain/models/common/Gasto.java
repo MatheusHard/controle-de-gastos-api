@@ -1,12 +1,14 @@
 package com.infotrapichao.controle_de_gastos.src.domain.models.common;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.enums.StatusPagamentoEnum;
 import com.infotrapichao.controle_de_gastos.src.domain.models.security.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Comment;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -57,5 +59,16 @@ public class Gasto {
     @JoinColumn(name = "agendadepagamento_id")
     @JsonBackReference(value = "agendadepagamento-gastos")
     private AgendaDePagamento agendaDePagamento;
+
+    @Column
+    @Comment("0 = Não pago, 1 = Vencido, 2 = Pago")
+    private StatusPagamentoEnum statusPagamento;
+
+    @Column(columnDefinition = "bit(1) default 0")
+    private boolean pago = false;
+
+    private String photoName;
+
+    private String imagemBase64;
 
 }

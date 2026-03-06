@@ -1,14 +1,10 @@
 package com.infotrapichao.controle_de_gastos.src.domain.services.common;
 
 import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.dtos.common.AgendaDePagamentoDTO;
-import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.dtos.common.GastoDTO;
 import com.infotrapichao.controle_de_gastos.src.domain.contracts.services.common.IAgendaDePagamentoService;
 import com.infotrapichao.controle_de_gastos.src.domain.models.common.AgendaDePagamento;
-import com.infotrapichao.controle_de_gastos.src.domain.models.common.Gasto;
 import com.infotrapichao.controle_de_gastos.src.infrastruture.repositories.common.AgendaDePagamentoRepository;
-import com.infotrapichao.controle_de_gastos.src.infrastruture.repositories.common.GastoRepository;
 import com.infotrapichao.controle_de_gastos.src.infrastruture.repositories.specification.AgendaDePagamentoEspecification;
-import com.infotrapichao.controle_de_gastos.src.infrastruture.repositories.specification.GastoSpecification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -25,14 +21,17 @@ public class AgendaDePagamentoService implements IAgendaDePagamentoService {
 
     @Override
     public AgendaDePagamento findById(Integer id) {
+        if (id == null) {
+            throw new IllegalArgumentException("ID cannot be null");
+        }
         return _agendaDePagamentoRepository.findById(id).orElseThrow(NoSuchElementException::new);
     }
 
     @Override
     public AgendaDePagamento create(AgendaDePagamento agendaDePagamento) {
-        if(agendaDePagamento.getId() != null && _agendaDePagamentoRepository.existsById(agendaDePagamento.getId())){
+        if (agendaDePagamento.getId() != null && _agendaDePagamentoRepository.existsById(agendaDePagamento.getId())) {
             throw new IllegalArgumentException("Agendamento já cadastrado!!!");
-        }else {
+        } else {
             return _agendaDePagamentoRepository.save(agendaDePagamento);
         }
     }
@@ -40,26 +39,30 @@ public class AgendaDePagamentoService implements IAgendaDePagamentoService {
     @Override
     public AgendaDePagamento update(AgendaDePagamento agendaDePagamento) {
 
-        AgendaDePagamento agendaDePagamentoExistente = _agendaDePagamentoRepository.findById(agendaDePagamento.getId()).orElseThrow(() -> new RuntimeException("AgendaDePagamento não encontrado"));
+        AgendaDePagamento agendaDePagamentoExistente = _agendaDePagamentoRepository.findById(agendaDePagamento.getId())
+                .orElseThrow(() -> new RuntimeException("AgendaDePagamento não encontrado"));
 
         // Atualiza os dados simples
         agendaDePagamentoExistente.setDeletado(agendaDePagamento.getDeletado());
         agendaDePagamentoExistente.setUpdatedAt(LocalDateTime.now());
 
         // ATUALIZA A LISTA DE AGENDAMENTOS sem quebrar a referência:
-       /* gastoExistente.getAgendamentos().clear();
-        if (cliente.getAgendamentos() != null) {
-            for (Agendamento ag : cliente.getAgendamentos()) {
-                ag.setCliente(clienteExistente); // importante manter a referência
-            }
-            clienteExistente.getAgendamentos().addAll(cliente.getAgendamentos());
-        }*/
+        /*
+         * gastoExistente.getAgendamentos().clear();
+         * if (cliente.getAgendamentos() != null) {
+         * for (Agendamento ag : cliente.getAgendamentos()) {
+         * ag.setCliente(clienteExistente); // importante manter a referência
+         * }
+         * clienteExistente.getAgendamentos().addAll(cliente.getAgendamentos());
+         * }
+         */
         return _agendaDePagamentoRepository.save(agendaDePagamento);
 
     }
 
     @Override
-    public List<AgendaDePagamento> findAll() { return _agendaDePagamentoRepository.findAll();
+    public List<AgendaDePagamento> findAll() {
+        return _agendaDePagamentoRepository.findAll();
     }
 
     @Override

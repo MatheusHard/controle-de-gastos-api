@@ -2,14 +2,17 @@ package com.infotrapichao.controle_de_gastos.src.domain.contracts.services.commo
 
 import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.dtos.common.AgendaDePagamentoDTO;
 import com.infotrapichao.controle_de_gastos.src.domain.models.common.AgendaDePagamento;
-import com.infotrapichao.controle_de_gastos.src.domain.models.common.Gasto;
 
 import java.util.List;
 
 public interface IAgendaDePagamentoService {
     AgendaDePagamento findById(Integer id);
+
     AgendaDePagamento create(AgendaDePagamento agendaDePagamento);
+
     AgendaDePagamento update(AgendaDePagamento agendaDePagamento);
+
     List<AgendaDePagamento> findAll();
+
     List<AgendaDePagamento> findAllByFilter(AgendaDePagamentoDTO filter);
 }

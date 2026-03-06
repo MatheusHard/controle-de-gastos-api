@@ -23,7 +23,7 @@ public class WorkerSendFaturaVencida {
         _gastoApplication = gastoApplication;
     }
 
-    @Scheduled(cron = "0 54 10 * * *", zone = "America/Sao_Paulo") // 1º segundos; 2º minutos; 3º horas [Campo]
+    @Scheduled(cron = "0 24 19 * * *", zone = "America/Sao_Paulo") // 1º segundos; 2º minutos; 3º horas [Campo]
     public void executarTarefaDiaria() {
         System.out.println("Executando tarefa diária às 16:35...");
         this.execSendEmails();

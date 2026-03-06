@@ -65,8 +65,7 @@ public class AgendaDePagamentoController {
         if(!agendasDePagamento.isEmpty()){
             agendaDePagamento = agendasDePagamento.getFirst();
         }
-        assert agendaDePagamento != null;
-        var fatura = AgendaDePagamentoMapper.toAgendaDePagamentoDTO(agendaDePagamento);
+        var fatura = agendaDePagamento != null ? AgendaDePagamentoMapper.toAgendaDePagamentoDTO(agendaDePagamento): null;
         return ResponseEntity.ok(fatura);
     }
     @PostMapping("/filtrar")

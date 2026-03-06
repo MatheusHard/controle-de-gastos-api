@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Comment;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -59,7 +60,8 @@ public class Gasto {
     @JsonBackReference(value = "agendadepagamento-gastos")
     private AgendaDePagamento agendaDePagamento;
 
-    @Column()
+    @Column
+    @Comment("0 = Não pago, 1 = Vencido, 2 = Pago")
     private StatusPagamentoEnum statusPagamento;
 
     @Column(columnDefinition = "bit(1) default 0")

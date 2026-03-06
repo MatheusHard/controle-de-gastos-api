@@ -2,6 +2,7 @@ package com.infotrapichao.controle_de_gastos.src.application.services.common;
 
 import com.infotrapichao.controle_de_gastos.src.application.contracts.common.IGastoApplication;
 import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.dtos.common.GastoDTO;
+import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.dtos.common.GastosMensaisDTO;
 import com.infotrapichao.controle_de_gastos.src.domain.contracts.services.common.IGastoService;
 import com.infotrapichao.controle_de_gastos.src.domain.models.common.Gasto;
 import org.springframework.stereotype.Service;
@@ -40,5 +41,10 @@ public class GastoApplication implements IGastoApplication {
     @Override
     public List<Gasto> findAllByFilter(GastoDTO filter) {
         return _gastoService.findAllByFilter(filter);
+    }
+
+    @Override
+    public List<GastosMensaisDTO> findTotaisPorMes() {
+        return _gastoService.findTotaisPorMes();
     }
 }

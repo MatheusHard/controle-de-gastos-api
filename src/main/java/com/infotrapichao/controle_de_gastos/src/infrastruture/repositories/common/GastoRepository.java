@@ -1,10 +1,12 @@
 package com.infotrapichao.controle_de_gastos.src.infrastruture.repositories.common;
 
+import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.dtos.common.GastoDTO;
 import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.dtos.common.GastosMensaisDTO;
 import com.infotrapichao.controle_de_gastos.src.domain.models.common.Gasto;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,12 +16,13 @@ public interface GastoRepository  extends JpaRepository<Gasto, Integer> {
     List<Gasto> findAll(Specification<Gasto> agendamentoSpecification);
 
 
-    @Query("SELECT new com.infotrapichao.controle_de_gastos.src.dto.GastosMensaisDTO(" +
-            "FUNCTION('MONTHNAME', g.createdAt), SUM(g.valor)) " +
+    @Query("SELECT new com.infotrapichao.controle_de_gastos.src.distributed.interfaces.dtos.common.GastosMensaisDTO(" +
+            "MONTH(g.createdAt), SUM(g.valor)) " +
             "FROM Gasto g " +
             "WHERE g.deletado = false " +
-            "GROUP BY FUNCTION('MONTH', g.createdAt) " +
-            "ORDER BY FUNCTION('MONTH', g.createdAt)")
-    List<GastosMensaisDTO> findTotaisPorMes();
+            "AND (:usuarioId IS NULL OR g.user.id = :usuarioId) " +
+            "GROUP BY MONTH(g.createdAt) " +
+            "ORDER BY MONTH(g.createdAt)")
+    List<GastosMensaisDTO> findTotaisPorMes(@Param("usuarioId") Integer usuarioId);
 
     }

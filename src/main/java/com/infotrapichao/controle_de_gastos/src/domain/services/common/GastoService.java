@@ -68,8 +68,8 @@ public class GastoService implements IGastoService {
     }
 
     @Override
-    public List<GastosMensaisDTO> findTotaisPorMes() {
-        return _gastoRepository.findTotaisPorMes();
+    public List<GastosMensaisDTO> findTotaisPorMes(GastoDTO filter) {
+        return _gastoRepository.findTotaisPorMes(filter.getUser().getId());
 
     }
 }

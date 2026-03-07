@@ -1,6 +1,7 @@
 package com.infotrapichao.controle_de_gastos.src.distributed.interfaces.controllers.common;
 
 import com.infotrapichao.controle_de_gastos.src.application.contracts.common.IGastoApplication;
+import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.dtos.common.GastoDTO;
 import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.dtos.common.GastosMensaisDTO;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,9 +16,10 @@ public class DashBoardController {
         this._gastoApplication = gastoApplication;
     }
 
-    @GetMapping("/totais-mensais")
-    public List<GastosMensaisDTO> getTotaisMensais() {
-        return _gastoApplication.findTotaisPorMes();
+    @PostMapping("/totais-mensais")
+    public List<GastosMensaisDTO> getTotaisMensais(@RequestBody GastoDTO filter) {
+        var lista = _gastoApplication.findTotaisPorMes(filter);
+        return lista;
     }
 
 

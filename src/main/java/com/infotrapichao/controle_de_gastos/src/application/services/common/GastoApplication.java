@@ -44,7 +44,7 @@ public class GastoApplication implements IGastoApplication {
     }
 
     @Override
-    public List<GastosMensaisDTO> findTotaisPorMes() {
-        return _gastoService.findTotaisPorMes();
+    public List<GastosMensaisDTO> findTotaisPorMes(GastoDTO filter) {
+        return _gastoService.findTotaisPorMes(filter);
     }
 }

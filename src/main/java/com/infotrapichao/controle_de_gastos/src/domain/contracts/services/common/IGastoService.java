@@ -12,5 +12,5 @@ public interface IGastoService {
     Gasto update(Gasto gasto);
     List<Gasto> findAll();
     List<Gasto> findAllByFilter(GastoDTO filter);
-    List<GastosMensaisDTO> findTotaisPorMes();
+    List<GastosMensaisDTO> findTotaisPorMes(GastoDTO filter);
 }

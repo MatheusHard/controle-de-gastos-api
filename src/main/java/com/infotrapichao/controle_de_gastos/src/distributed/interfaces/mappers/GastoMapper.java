@@ -10,8 +10,8 @@ public class GastoMapper {
 
 public static GastoDTO toGastoDTO(Gasto gasto) {
     return new GastoDTO(gasto.getId(), gasto.getCreatedAt(), gasto.getUpdatedAt(),
-            gasto.getVencimento(), gasto.getDescricao(), gasto.getUser(),  gasto.isDeletado(), null, null, gasto.getValor(), gasto.getAgendaDePagamento(),
-            gasto.getStatusPagamento(), gasto.isPago(), gasto.getPhotoName(), gasto.getImagemBase64());
+            gasto.getVencimento(), gasto.getDescricao(), gasto.getUser(),  gasto.getDeletado(), null, null, gasto.getValor(), gasto.getAgendaDePagamento(),
+            gasto.getStatusPagamento(), gasto.getPago(), gasto.getPhotoName(), gasto.getImagemBase64());
 }
 
 public static Gasto toGasto(GastoDTO gastoDTO) {

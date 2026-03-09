@@ -1,17 +1,10 @@
-package com.infotrapichao.controle_de_gastos.src.distributed.interfaces.dtos.common;
-
-
-import lombok.Getter;
+package com.infotrapichao.controle_de_gastos.src.distributed.interfaces.dtos.common.dashboard;
 
 import java.math.BigDecimal;
 
-public record GastosMensaisDTO(Integer mes, BigDecimal total, String mesAbreviado) {
-    public GastosMensaisDTO(Integer mes, BigDecimal total) {
-        this(mes, total, traduzMes(mes));
-    }
-
-    private static String traduzMes(Integer mes) {
-        return switch (mes) {
+public record GastosMensaisDTO(Number mes, BigDecimal total) {
+    public String mesAbreviado() {
+        return switch (mes.intValue()) {
             case 1 -> "JAN";
             case 2 -> "FEV";
             case 3 -> "MAR";

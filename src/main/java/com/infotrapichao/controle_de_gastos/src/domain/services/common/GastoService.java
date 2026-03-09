@@ -1,7 +1,7 @@
 package com.infotrapichao.controle_de_gastos.src.domain.services.common;
 
 import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.dtos.common.GastoDTO;
-import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.dtos.common.GastosMensaisDTO;
+import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.dtos.common.dashboard.GastosMensaisDTO;
 import com.infotrapichao.controle_de_gastos.src.domain.contracts.services.common.IGastoService;
 import com.infotrapichao.controle_de_gastos.src.domain.models.common.Gasto;
 import com.infotrapichao.controle_de_gastos.src.infrastruture.repositories.common.GastoRepository;
@@ -43,7 +43,7 @@ public class GastoService implements IGastoService {
         // Atualiza os dados simples
         gastoExistente.setDescricao(gasto.getDescricao());
         gastoExistente.setVencimento(gasto.getVencimento());
-        gastoExistente.setDeletado(gasto.isDeletado());
+        gastoExistente.setDeletado(gasto.getDeletado());
         gastoExistente.setUpdatedAt(LocalDateTime.now());
 
         // ATUALIZA A LISTA DE AGENDAMENTOS sem quebrar a referência:

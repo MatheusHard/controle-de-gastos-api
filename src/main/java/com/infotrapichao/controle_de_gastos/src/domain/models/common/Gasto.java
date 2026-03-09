@@ -44,8 +44,8 @@ public class Gasto {
     @Column(length = 50, nullable = false)
     private String descricao;
 
-    @Column(columnDefinition = "bit(1) default 0")
-    private boolean deletado = false;
+    @Column(name = "deletado", columnDefinition = "bit(1) default 0")
+    private Boolean deletado = false;   // ✅ Usar Boolean em vez de boolean
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -64,8 +64,9 @@ public class Gasto {
     @Comment("0 = Não pago, 1 = Vencido, 2 = Pago")
     private StatusPagamentoEnum statusPagamento;
 
-    @Column(columnDefinition = "bit(1) default 0")
-    private boolean pago = false;
+
+    @Column(name = "pago", columnDefinition = "bit(1) default 0")
+    private Boolean pago = false;       // ✅ Usar Boolean em vez de boolean
 
     private String photoName;
 

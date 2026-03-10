@@ -3,10 +3,12 @@ package com.infotrapichao.controle_de_gastos.src.application.services.common;
 import com.infotrapichao.controle_de_gastos.src.application.contracts.common.IGastoApplication;
 import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.dtos.common.GastoDTO;
 import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.dtos.common.dashboard.GastosMensaisDTO;
+import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.dtos.common.dashboard.TotaisMensaisResponse;
 import com.infotrapichao.controle_de_gastos.src.domain.contracts.services.common.IGastoService;
 import com.infotrapichao.controle_de_gastos.src.domain.models.common.Gasto;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -44,7 +46,14 @@ public class GastoApplication implements IGastoApplication {
     }
 
     @Override
-    public List<GastosMensaisDTO> findTotaisPorMes(GastoDTO filter) {
-        return _gastoService.findTotaisPorMes(filter);
+    public TotaisMensaisResponse findTotaisPorMes(GastoDTO filter) {
+
+        List<GastosMensaisDTO> lista = _gastoService.findTotaisPorMes(filter);
+        BigDecimal somaTotal = lista.stream()
+                .map(GastosMensaisDTO::total)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        return new TotaisMensaisResponse(lista, somaTotal);
+
     }
 }

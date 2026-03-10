@@ -4,6 +4,7 @@ import com.infotrapichao.controle_de_gastos.src.application.contracts.common.IGa
 import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.core.utils.Utils;
 import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.dtos.common.GastoDTO;
 import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.dtos.common.dashboard.GastosMensaisDTO;
+import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.dtos.common.dashboard.TotaisMensaisResponse;
 import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.mappers.GastoMapper;
 import com.infotrapichao.controle_de_gastos.src.domain.models.common.Gasto;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,7 @@ public class DashBoardController {
     }
 
     @PostMapping("/totais-mensais")
-    public ResponseEntity<List<GastosMensaisDTO>> buscar(@RequestBody GastoDTO filter) {
+    public ResponseEntity<TotaisMensaisResponse> buscar(@RequestBody GastoDTO filter) {
         var gastos = _gastoApplication.findTotaisPorMes(filter);
         return ResponseEntity.ok(gastos);
     }

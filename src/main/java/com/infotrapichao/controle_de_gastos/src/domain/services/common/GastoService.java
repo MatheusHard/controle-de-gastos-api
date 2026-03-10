@@ -1,6 +1,7 @@
 package com.infotrapichao.controle_de_gastos.src.domain.services.common;
 
 import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.dtos.common.GastoDTO;
+import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.dtos.common.dashboard.GastosMensaisDTO;
 import com.infotrapichao.controle_de_gastos.src.domain.contracts.services.common.IGastoService;
 import com.infotrapichao.controle_de_gastos.src.domain.models.common.Gasto;
 import com.infotrapichao.controle_de_gastos.src.infrastruture.repositories.common.GastoRepository;
@@ -58,11 +59,15 @@ public class GastoService implements IGastoService {
     }
 
     @Override
-    public List<Gasto> findAll() { return _gastoRepository.findAll();
-}
+    public List<Gasto> findAll() { return _gastoRepository.findAll();}
 
     @Override
     public List<Gasto> findAllByFilter(GastoDTO filter) {
         return _gastoRepository.findAll(GastoSpecification.withFiltersDTO(filter));
+    }
+
+    @Override
+    public List<GastosMensaisDTO> findTotaisPorMes(GastoDTO filter) {
+        return _gastoRepository.findTotaisPorMes(filter.getUser().getId());
     }
 }

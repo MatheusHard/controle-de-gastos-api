@@ -1,8 +1,11 @@
 package com.infotrapichao.controle_de_gastos.src.distributed.interfaces.dtos.common.dashboard;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.math.BigDecimal;
 
 public record GastosMensaisDTO(Number mes, BigDecimal total) {
+    @JsonProperty("mesAbreviado")
     public String mesAbreviado() {
         return switch (mes.intValue()) {
             case 1 -> "JAN";

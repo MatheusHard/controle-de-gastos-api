@@ -6,7 +6,7 @@ target/
 
 # Ignorar application.properties e pom.xml
 /src/main/resources/application.properties
-/pom.xml
+#/pom.xml
 
 ### STS ###
 .apt_generated

@@ -152,6 +152,7 @@
                 </configuration>
             </plugin>
         </plugins>
+        <finalName>main_file</finalName>
     </build>
 
 </project>

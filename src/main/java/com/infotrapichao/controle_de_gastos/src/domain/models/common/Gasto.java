@@ -4,10 +4,6 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.enums.StatusPagamentoEnum;
 import com.infotrapichao.controle_de_gastos.src.domain.models.security.User;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.hibernate.annotations.Comment;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,10 +16,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
-@Setter
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 public class Gasto {
 
@@ -71,4 +63,124 @@ public class Gasto {
 
     private String imagemBase64;
 
+    public Gasto(){}
+    public Gasto(Integer id, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime vencimento, String descricao, boolean deletado, User user, BigDecimal valor, AgendaDePagamento agendaDePagamento, StatusPagamentoEnum statusPagamento, boolean pago, String photoName, String imagemBase64) {
+        this.id = id;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.vencimento = vencimento;
+        this.descricao = descricao;
+        this.deletado = deletado;
+        this.user = user;
+        this.valor = valor;
+        this.agendaDePagamento = agendaDePagamento;
+        this.statusPagamento = statusPagamento;
+        this.pago = pago;
+        this.photoName = photoName;
+        this.imagemBase64 = imagemBase64;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public LocalDateTime getVencimento() {
+        return vencimento;
+    }
+
+    public void setVencimento(LocalDateTime vencimento) {
+        this.vencimento = vencimento;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public boolean isDeletado() {
+        return deletado;
+    }
+
+    public void setDeletado(boolean deletado) {
+        this.deletado = deletado;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public BigDecimal getValor() {
+        return valor;
+    }
+
+    public void setValor(BigDecimal valor) {
+        this.valor = valor;
+    }
+
+    public AgendaDePagamento getAgendaDePagamento() {
+        return agendaDePagamento;
+    }
+
+    public void setAgendaDePagamento(AgendaDePagamento agendaDePagamento) {
+        this.agendaDePagamento = agendaDePagamento;
+    }
+
+    public StatusPagamentoEnum getStatusPagamento() {
+        return statusPagamento;
+    }
+
+    public void setStatusPagamento(StatusPagamentoEnum statusPagamento) {
+        this.statusPagamento = statusPagamento;
+    }
+
+    public boolean isPago() {
+        return pago;
+    }
+
+    public void setPago(boolean pago) {
+        this.pago = pago;
+    }
+
+    public String getPhotoName() {
+        return photoName;
+    }
+
+    public void setPhotoName(String photoName) {
+        this.photoName = photoName;
+    }
+
+    public String getImagemBase64() {
+        return imagemBase64;
+    }
+
+    public void setImagemBase64(String imagemBase64) {
+        this.imagemBase64 = imagemBase64;
+    }
 }

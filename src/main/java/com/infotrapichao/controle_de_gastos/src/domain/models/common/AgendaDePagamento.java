@@ -4,19 +4,11 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.infotrapichao.controle_de_gastos.src.domain.models.security.User;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Setter
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 public class AgendaDePagamento {
 
@@ -43,4 +35,61 @@ public class AgendaDePagamento {
     @JsonManagedReference(value = "agendadepagamento-gastos")
     private List<Gasto> gastos;
 
+    public AgendaDePagamento(){}
+    public AgendaDePagamento(Integer id, LocalDateTime createdAt, LocalDateTime updatedAt, User user, Boolean deletado, List<Gasto> gastos) {
+        this.id = id;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.user = user;
+        this.deletado = deletado;
+        this.gastos = gastos;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Boolean getDeletado() {
+        return deletado;
+    }
+
+    public void setDeletado(Boolean deletado) {
+        this.deletado = deletado;
+    }
+
+    public List<Gasto> getGastos() {
+        return gastos;
+    }
+
+    public void setGastos(List<Gasto> gastos) {
+        this.gastos = gastos;
+    }
 }

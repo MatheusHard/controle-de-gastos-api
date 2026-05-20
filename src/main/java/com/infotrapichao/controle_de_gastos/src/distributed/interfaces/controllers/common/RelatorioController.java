@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.util.List;
 
 import static com.infotrapichao.controle_de_gastos.src.distributed.interfaces.core.utils.Utils.*;
@@ -50,8 +51,9 @@ public class RelatorioController {
             borderStyle.setVerticalAlignment(VerticalAlignment.CENTER);
 
             int rowNum = 2;
+             BigDecimal totalValor = lista.stream().map(GastoDTO::getValor).reduce(BigDecimal.ZERO, BigDecimal::add);
 
-            for (GastoDTO gasto : lista) {
+             for (GastoDTO gasto : lista) {
 
                 Row row = sheet.createRow(rowNum++);
                 /// Descricao
@@ -71,6 +73,18 @@ public class RelatorioController {
                 cell3.setCellValue(gasto.getStatusPagamento() != null ? convertStatusPagamento(gasto.getStatusPagamento()) : "");
                 cell3.setCellStyle(borderStyle);
             }
+             /// Total
+            Row row = sheet.createRow(rowNum);
+            Cell cell0 = row.createCell(0);
+            cell0.setCellValue("TOTAL");
+            cell0.setCellStyle(borderStyle);
+            Cell cell1 = row.createCell(1);
+            cell1.setCellValue("");
+            cell1.setCellStyle(borderStyle);
+            Cell cell2 = row.createCell(2);
+            cell2.setCellValue(convertValor(totalValor));
+            cell2.setCellStyle(borderStyle);
+
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             workbook.write(outputStream);
             workbook.close();

@@ -59,9 +59,10 @@ public class Utils {
         }
     }
 
+    // calcular total dos valores
     public static String convertStatusPagamento(StatusPagamentoEnum status) {
        if (status == null)  return "";
-        return switch (status) {
+       return switch (status) {
             case NAO_PAGO -> "Não Pago";
             case PAGO -> "Pago";
             case VENCIDO -> "Vencido";

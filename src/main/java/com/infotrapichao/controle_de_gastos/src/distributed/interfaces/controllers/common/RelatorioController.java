@@ -3,7 +3,7 @@ package com.infotrapichao.controle_de_gastos.src.distributed.interfaces.controll
 import com.infotrapichao.controle_de_gastos.src.application.contracts.common.IGastoApplication;
 import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.dtos.common.GastoDTO;
 import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.mappers.GastoMapper;
-import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.core.io.ClassPathResource;
@@ -40,16 +40,37 @@ public class RelatorioController {
             XSSFWorkbook workbook = new XSSFWorkbook(template);
             XSSFSheet sheet = workbook.getSheetAt(0);
 
+            /// STYLE
+            CellStyle borderStyle = workbook.createCellStyle();
+            borderStyle.setBorderTop(BorderStyle.THIN);
+            borderStyle.setBorderBottom(BorderStyle.THIN);
+            borderStyle.setBorderLeft(BorderStyle.THIN);
+            borderStyle.setBorderRight(BorderStyle.THIN);
+            borderStyle.setAlignment(HorizontalAlignment.CENTER);
+            borderStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+
             int rowNum = 2;
 
             for (GastoDTO gasto : lista) {
-                Row row = sheet.createRow(rowNum++);
-                row.createCell(0).setCellValue(gasto.getDescricao());
-                row.createCell(1).setCellValue(gasto.getVencimento() != null ? getDataFormatada(gasto.getVencimento(), true) : "");
-                row.createCell(2).setCellValue(convertValor(gasto.getValor()));
-                row.createCell(3).setCellValue(gasto.getStatusPagamento() != null ? convertStatusPagamento(gasto.getStatusPagamento()) : "");
-            }
 
+                Row row = sheet.createRow(rowNum++);
+                /// Descricao
+                Cell cell0 = row.createCell(0);
+                cell0.setCellValue(gasto.getDescricao());
+                cell0.setCellStyle(borderStyle);
+                /// Vencimento
+                Cell cell1 = row.createCell(1);
+                cell1.setCellValue(gasto.getVencimento() != null ? getDataFormatada(gasto.getVencimento(),false) : "");
+                cell1.setCellStyle(borderStyle);
+                /// Valor
+                Cell cell2 = row.createCell(2);
+                cell2.setCellValue(convertValor(gasto.getValor()));
+                cell2.setCellStyle(borderStyle);
+                /// Status Pagamento
+                Cell cell3 = row.createCell(3);
+                cell3.setCellValue(gasto.getStatusPagamento() != null ? convertStatusPagamento(gasto.getStatusPagamento()) : "");
+                cell3.setCellStyle(borderStyle);
+            }
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             workbook.write(outputStream);
             workbook.close();

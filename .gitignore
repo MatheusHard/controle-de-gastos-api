@@ -5,7 +5,7 @@ target/
 !**/src/test/**/target/
 
 # Ignorar application.properties e pom.xml
-/src/main/resources/application.properties
+**/application.properties
 #/pom.xml
 
 ### STS ###

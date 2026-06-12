@@ -1,7 +1,6 @@
 package com.infotrapichao.controle_de_gastos.src.infrastruture.repositories.common;
 
 import com.infotrapichao.controle_de_gastos.src.domain.models.common.AgendaDePagamento;
-import com.infotrapichao.controle_de_gastos.src.domain.models.common.Gasto;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

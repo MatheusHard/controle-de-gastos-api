@@ -23,7 +23,7 @@ public class EmailService {
 
             helper.setTo(emailDTO.getDestinatario());
             helper.setSubject(emailDTO.getAssunto());
-            helper.setText(getCorpo(emailDTO), true); // true = habilita HTML
+            helper.setText(getCorpo(emailDTO), true);
             helper.setFrom(emailDTO.getRemetente());
 
             mailSender.send(mimeMessage);
@@ -38,23 +38,25 @@ public class EmailService {
         String valor = emailDTO.getValor().toString();
         String dataVencimento = Utils.getDataFormatada(emailDTO.getVencimento(), false);
 
-        return String.format("""
-            <!DOCTYPE html>
-            <html>
-            <head>
-              <meta charset="UTF-8">
-            </head>
-            <body style="font-family: Arial, sans-serif; font-size: 16px; color: #000;">
-              <br>
-                  <p>Olá <strong>Sr.(a) %s</strong>,</p>
-                  <p>Segue abaixo os detalhes da sua fatura:</p>
-                  <p>📄 Fatura: <strong style="font-size: 18px;">%s</strong></p>
-                  <p>💰 Valor: R$ %s</p>
-                  <p>📅 Vencimento: %s</p>
-              <br>
-                  <p>Por favor, verifique as informações até a data de vencimento para evitar encargos adicionais.</p>
-            </body>
-            </html>
-            """, nomeUser, descricao, valor, dataVencimento);
+        return String.format(
+                """
+                        <!DOCTYPE html>
+                        <html>
+                        <head>
+                          <meta charset="UTF-8">
+                        </head>
+                        <body style="font-family: Arial, sans-serif; font-size: 16px; color: #000;">
+                          <br>
+                              <p>Olá <strong>Sr.(a) %s</strong>,</p>
+                              <p>Segue abaixo os detalhes da sua fatura:</p>
+                              <p>📄 Fatura: <strong style="font-size: 18px;">%s</strong></p>
+                              <p>💰 Valor: R$ %s</p>
+                              <p>📅 Vencimento: %s</p>
+                          <br>
+                              <p>Por favor, verifique as informações até a data de vencimento para evitar encargos adicionais.</p>
+                        </body>
+                        </html>
+                        """,
+                nomeUser, descricao, valor, dataVencimento);
     }
 }

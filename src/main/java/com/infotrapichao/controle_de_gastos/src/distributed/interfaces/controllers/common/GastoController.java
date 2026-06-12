@@ -5,6 +5,10 @@ import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.core.util
 import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.dtos.common.GastoDTO;
 import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.mappers.GastoMapper;
 import com.infotrapichao.controle_de_gastos.src.domain.models.common.Gasto;
+import com.infotrapichao.controle_de_gastos.src.infrastruture.clients.PhotoClient;
+
+import jakarta.servlet.http.HttpServletRequest;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -18,17 +22,24 @@ import java.util.List;
 public class GastoController {
 
     private final IGastoApplication _gastoApplication;
+    private final PhotoClient photoClient;
 
-    public GastoController(IGastoApplication gastoApplication) {
+    public GastoController(IGastoApplication gastoApplication, PhotoClient photoClient) {
         this._gastoApplication = gastoApplication;
+        this.photoClient = photoClient;
     }
 
-
     @PostMapping
-    public ResponseEntity<Gasto> create(@Validated @RequestBody GastoDTO gastoDTO){
+    public ResponseEntity<Gasto> create(@Validated @RequestBody GastoDTO gastoDTO, HttpServletRequest request) {
+        String authorization = request.getHeader("Authorization");
 
         Gasto gasto = GastoMapper.toGasto(gastoDTO);
-        Utils.savePhoto(gasto.getPhotoName(), gasto.getImagemBase64());
+        // Micro-serviço de imagens
+        photoClient.upload(
+                gasto.getPhotoName(),
+                gasto.getImagemBase64(),
+                authorization);
+
         gasto.setImagemBase64(null);
         var agendamentoCreated = _gastoApplication.create(gasto);
         URI location = ServletUriComponentsBuilder
@@ -40,10 +51,10 @@ public class GastoController {
     }
 
     @PutMapping()
-    public ResponseEntity<Gasto> put(@RequestBody GastoDTO gastoDTO){
+    public ResponseEntity<Gasto> put(@RequestBody GastoDTO gastoDTO) {
 
         Gasto gasto = GastoMapper.toGasto(gastoDTO);
-        if(gasto.getPhotoName() != null && gasto.getImagemBase64() != null) {
+        if (gasto.getPhotoName() != null && gasto.getImagemBase64() != null) {
             Utils.savePhoto(gasto.getPhotoName(), gasto.getImagemBase64());
         }
         gasto.setImagemBase64(null);
@@ -57,15 +68,17 @@ public class GastoController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<GastoDTO>> findAll(){
+    public ResponseEntity<List<GastoDTO>> findAll() {
         var lista = GastoMapper.toAgendamentoDTOList(_gastoApplication.findAll());
         return ResponseEntity.ok(lista);
     }
+
     @GetMapping("/{id}")
-    public ResponseEntity<Gasto> findById(@PathVariable("id") Integer id){
+    public ResponseEntity<Gasto> findById(@PathVariable("id") Integer id) {
         var gasto = _gastoApplication.findById(id);
         return ResponseEntity.ok(gasto);
     }
+
     @PostMapping("/filtrar")
     public ResponseEntity<List<GastoDTO>> filtrar(@RequestBody GastoDTO filter) {
         var gastos = _gastoApplication.findAllByFilter(filter);
@@ -74,4 +87,3 @@ public class GastoController {
     }
 
 }
-

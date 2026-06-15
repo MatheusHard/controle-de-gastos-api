@@ -34,11 +34,14 @@ public class GastoController {
         String authorization = request.getHeader("Authorization");
 
         Gasto gasto = GastoMapper.toGasto(gastoDTO);
+
         // Micro-serviço de imagens
-        photoClient.upload(
-                gasto.getPhotoName(),
-                gasto.getImagemBase64(),
-                authorization);
+        if (gasto.getPhotoName() != null && gasto.getImagemBase64() != null) {
+            photoClient.upload(
+                    gasto.getPhotoName(),
+                    gasto.getImagemBase64(),
+                    authorization);
+        }
 
         gasto.setImagemBase64(null);
         var agendamentoCreated = _gastoApplication.create(gasto);
@@ -51,11 +54,15 @@ public class GastoController {
     }
 
     @PutMapping()
-    public ResponseEntity<Gasto> put(@RequestBody GastoDTO gastoDTO) {
-
+    public ResponseEntity<Gasto> put(@RequestBody GastoDTO gastoDTO, HttpServletRequest request) {
+        String authorization = request.getHeader("Authorization");
         Gasto gasto = GastoMapper.toGasto(gastoDTO);
+        // Micro-serviço de imagens
         if (gasto.getPhotoName() != null && gasto.getImagemBase64() != null) {
-            Utils.savePhoto(gasto.getPhotoName(), gasto.getImagemBase64());
+            photoClient.upload(
+                    gasto.getPhotoName(),
+                    gasto.getImagemBase64(),
+                    authorization);
         }
         gasto.setImagemBase64(null);
         var gastoUpdated = _gastoApplication.update(gasto);

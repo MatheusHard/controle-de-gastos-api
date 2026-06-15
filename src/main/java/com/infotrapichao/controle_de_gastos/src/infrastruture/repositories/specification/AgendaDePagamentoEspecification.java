@@ -1,9 +1,7 @@
 package com.infotrapichao.controle_de_gastos.src.infrastruture.repositories.specification;
 
 import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.dtos.common.AgendaDePagamentoDTO;
-import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.dtos.common.GastoDTO;
 import com.infotrapichao.controle_de_gastos.src.domain.models.common.AgendaDePagamento;
-import com.infotrapichao.controle_de_gastos.src.domain.models.common.Gasto;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -41,14 +39,15 @@ public class AgendaDePagamentoEspecification {
             } else if (filtro.getDataInicial() != null) {
                 predicates.add(cb.greaterThanOrEqualTo(root.get("updatedAt"), filtro.getDataInicial().atStartOfDay()));
             } else if (filtro.getDataFinal() != null) {
-                predicates.add(cb.lessThanOrEqualTo(root.get("updatedAt"), filtro.getDataFinal().atTime(LocalTime.MAX)));
+                predicates
+                        .add(cb.lessThanOrEqualTo(root.get("updatedAt"), filtro.getDataFinal().atTime(LocalTime.MAX)));
             }
             /// Order By UpdatedAt DESC
-            assert query != null;
-            query.orderBy(cb.desc(root.get("updatedAt")));
+            if (query != null) {
+                query.orderBy(cb.desc(root.get("updatedAt")));
+            }
 
             return cb.and(predicates.toArray(new Predicate[0]));
         };
     }
 }
-

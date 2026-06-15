@@ -2,10 +2,8 @@ package com.infotrapichao.controle_de_gastos.src.distributed.interfaces.controll
 
 import com.infotrapichao.controle_de_gastos.src.application.contracts.security.IUserApplication;
 import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.core.utils.Utils;
-import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.dtos.common.EmailDTO;
 import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.dtos.security.LoginDTO;
 import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.dtos.security.SessionDTO;
-import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.services.smtp.EmailService;
 import com.infotrapichao.controle_de_gastos.src.domain.models.security.User;
 import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.configuration.jwt.JwtService;
 import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.configuration.jwt.SecurityConfig;
@@ -15,11 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-
-import java.math.BigDecimal;
-import java.time.DateTimeException;
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,7 +30,7 @@ public class AuthController {
 
     private final IUserApplication _userApplication;
 
-    public AuthController(IUserApplication userApplication){
+    public AuthController(IUserApplication userApplication) {
         this._userApplication = userApplication;
     }
 
@@ -54,7 +47,7 @@ public class AuthController {
             if (!passwordOk) {
                 throw new RuntimeException("Senha inválida para o login" + login.getUsername());
             }
-            //Estamos enviado o token
+            // Estamos enviado o token
             SessionDTO session = new SessionDTO();
             session.setLogin(user.getUsername());
             // Definindo claims adicionais

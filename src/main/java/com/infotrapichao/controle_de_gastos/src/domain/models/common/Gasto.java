@@ -6,15 +6,9 @@ import com.infotrapichao.controle_de_gastos.src.domain.models.security.User;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Comment;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
 
 @Entity
 public class Gasto {
@@ -44,7 +38,7 @@ public class Gasto {
     @JsonBackReference
     private User user;
 
-    @Column(precision = 19, scale = 2)  // 19 dígitos no total, 2 após a vírgula
+    @Column(precision = 19, scale = 2) // 19 dígitos no total, 2 após a vírgula
     private BigDecimal valor;
 
     @ManyToOne
@@ -63,8 +57,12 @@ public class Gasto {
 
     private String imagemBase64;
 
-    public Gasto(){}
-    public Gasto(Integer id, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime vencimento, String descricao, boolean deletado, User user, BigDecimal valor, AgendaDePagamento agendaDePagamento, StatusPagamentoEnum statusPagamento, boolean pago, String photoName, String imagemBase64) {
+    public Gasto() {
+    }
+
+    public Gasto(Integer id, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime vencimento,
+            String descricao, boolean deletado, User user, BigDecimal valor, AgendaDePagamento agendaDePagamento,
+            StatusPagamentoEnum statusPagamento, boolean pago, String photoName, String imagemBase64) {
         this.id = id;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;

@@ -6,6 +6,9 @@ import com.infotrapichao.controle_de_gastos.src.domain.contracts.services.common
 import com.infotrapichao.controle_de_gastos.src.domain.models.common.Gasto;
 import com.infotrapichao.controle_de_gastos.src.infrastruture.repositories.common.GastoRepository;
 import com.infotrapichao.controle_de_gastos.src.infrastruture.repositories.specification.GastoSpecification;
+
+import io.micrometer.common.lang.NonNull;
+
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -27,18 +30,22 @@ public class GastoService implements IGastoService {
     }
 
     @Override
-    public Gasto create(Gasto gasto) {
-        if(gasto.getId() != null && _gastoRepository.existsById(gasto.getId())){
-            throw new IllegalArgumentException("Cliente já cadastrado!!!");
-        }else {
+    public Gasto create(@NonNull Gasto gasto) {
+        if (gasto.getId() != null && _gastoRepository.existsById(gasto.getId())) {
+            throw new IllegalArgumentException("Gasto já cadastrado!!!");
+        } else {
             return _gastoRepository.save(gasto);
         }
     }
 
     @Override
     public Gasto update(Gasto gasto) {
+        if (gasto.getId() != null && !_gastoRepository.existsById(gasto.getId())) {
+            throw new IllegalArgumentException("Gasto não encontrado!!!");
+        }
 
-        Gasto gastoExistente = _gastoRepository.findById(gasto.getId()).orElseThrow(() -> new RuntimeException("Gasto não encontrado"));
+        Gasto gastoExistente = _gastoRepository.findById(gasto.getId())
+                .orElseThrow(() -> new RuntimeException("Gasto não encontrado"));
 
         // Atualiza os dados simples
         gastoExistente.setDescricao(gasto.getDescricao());
@@ -47,19 +54,23 @@ public class GastoService implements IGastoService {
         gastoExistente.setUpdatedAt(LocalDateTime.now());
 
         // ATUALIZA A LISTA DE AGENDAMENTOS sem quebrar a referência:
-       /* gastoExistente.getAgendamentos().clear();
-        if (cliente.getAgendamentos() != null) {
-            for (Agendamento ag : cliente.getAgendamentos()) {
-                ag.setCliente(clienteExistente); // importante manter a referência
-            }
-            clienteExistente.getAgendamentos().addAll(cliente.getAgendamentos());
-        }*/
+        /*
+         * gastoExistente.getAgendamentos().clear();
+         * if (cliente.getAgendamentos() != null) {
+         * for (Agendamento ag : cliente.getAgendamentos()) {
+         * ag.setCliente(clienteExistente); // importante manter a referência
+         * }
+         * clienteExistente.getAgendamentos().addAll(cliente.getAgendamentos());
+         * }
+         */
         return _gastoRepository.save(gasto);
 
     }
 
     @Override
-    public List<Gasto> findAll() { return _gastoRepository.findAll();}
+    public List<Gasto> findAll() {
+        return _gastoRepository.findAll();
+    }
 
     @Override
     public List<Gasto> findAllByFilter(GastoDTO filter) {

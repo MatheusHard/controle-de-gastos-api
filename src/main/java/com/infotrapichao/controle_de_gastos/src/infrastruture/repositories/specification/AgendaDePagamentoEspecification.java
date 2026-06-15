@@ -43,8 +43,9 @@ public class AgendaDePagamentoEspecification {
                         .add(cb.lessThanOrEqualTo(root.get("updatedAt"), filtro.getDataFinal().atTime(LocalTime.MAX)));
             }
             /// Order By UpdatedAt DESC
-            assert query != null;
-            query.orderBy(cb.desc(root.get("updatedAt")));
+            if (query != null) {
+                query.orderBy(cb.desc(root.get("updatedAt")));
+            }
 
             return cb.and(predicates.toArray(new Predicate[0]));
         };

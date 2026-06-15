@@ -3,14 +3,12 @@ package com.infotrapichao.controle_de_gastos.src.distributed.interfaces.services
 import com.infotrapichao.controle_de_gastos.src.application.contracts.common.IGastoApplication;
 import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.dtos.common.EmailDTO;
 import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.dtos.common.GastoDTO;
-import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.mappers.GastoMapper;
 import com.infotrapichao.controle_de_gastos.src.distributed.interfaces.services.smtp.EmailService;
 import com.infotrapichao.controle_de_gastos.src.domain.models.common.Gasto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Component
@@ -19,20 +17,21 @@ public class WorkerSendFaturaVencida {
     private final IGastoApplication _gastoApplication;
     @Autowired
     private EmailService emailService;
+
     public WorkerSendFaturaVencida(IGastoApplication gastoApplication) {
         _gastoApplication = gastoApplication;
     }
 
-    @Scheduled(cron = "0 24 19 * * *", zone = "America/Sao_Paulo") // 1º segundos; 2º minutos; 3º horas [Campo]
+    @Scheduled(cron = "0 21 20 * * *", zone = "America/Sao_Paulo") // 1º segundos; 2º minutos; 3º horas [Campo]
     public void executarTarefaDiaria() {
-        System.out.println("Executando tarefa diária às 16:35...");
+        System.out.println("Executando tarefa diária às 20:50...");
         this.execSendEmails();
         System.out.println("Fim tarefa diária...");
     }
 
     private void execSendEmails() {
         GastoDTO filter = new GastoDTO();
-        filter.setVencimento(LocalDateTime.now()); //Pegar apenas faturas que vencem hoje
+        filter.setVencimento(LocalDateTime.now()); // Pegar apenas faturas que vencem hoje
         filter.setDeletado(false);
         filter.setPago(false);
         var list = _gastoApplication.findAllByFilter(filter);
@@ -41,10 +40,11 @@ public class WorkerSendFaturaVencida {
         }
     }
 
-    private void sendEmail(Gasto fatura){
+    private void sendEmail(Gasto fatura) {
         emailService.sendHtmlEmail(this.generateEmailDTO(fatura));
     }
-    private EmailDTO generateEmailDTO(Gasto fatura){
+
+    private EmailDTO generateEmailDTO(Gasto fatura) {
         EmailDTO email = new EmailDTO();
         email.setNomeUsuario(fatura.getUser().getUsername());
         email.setDescricao(fatura.getDescricao());
